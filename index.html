@@ -15,16 +15,14 @@
     <link rel="stylesheet" href="css/bootstrap.min.css" />
 
     <!-- JQuery UI -->
-    <link rel="stylesheet" href="css/jquery-ui.min.css" />
-
-    <!-- Animate -->
-    <!-- <link rel="stylesheet" href="css/animate.css"> -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css"
+    />
 
     <!-- My CSS -->
     <link rel="stylesheet" href="css/modal.css" />
-
     <link rel="stylesheet" href="css/style4.css" />
-
     <link rel="stylesheet" type="text/css" href="css/main.css" />
   </head>
 
@@ -132,12 +130,8 @@
                   </h3>
                 </div>
                 <div class="col-md-6 text-right">
-                  <button
-                    class="btn btn-primary"
-                    id="btnAdd"
-                    data-toggle="modal"
-                    data-target="#myModal"
-                  >
+                  <!-- Đã xoá data-toggle và data-target, JS sẽ tự mở modal -->
+                  <button class="btn btn-primary" id="btnAdd">
                     Thêm nhân viên
                   </button>
                 </div>
@@ -156,9 +150,9 @@
                       id="searchName"
                     />
                     <div class="input-group-prepend">
-                      <span class="input-group-text" id="btnSearchEmployee"
-                        ><i class="fa fa-search"></i
-                      ></span>
+                      <span class="input-group-text" id="btnSearchEmployee">
+                        <i class="fa fa-search"></i>
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -203,14 +197,8 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <header class="head-form mb-0">
-            <h2 id="header-title">Log In</h2>
+            <h2 id="headerTitle">Log In</h2>
           </header>
-
-          <!-- Modal Header -->
-          <!-- 	<div class="modal-header">
-					<h4 class="modal-title" id="modal-title">Modal Heading</h4>
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-				</div> -->
 
           <!-- Modal body -->
           <div class="modal-body">
@@ -330,11 +318,12 @@
                       ><i class="fa fa-briefcase"></i
                     ></span>
                   </div>
+                  <!-- Đã sửa option khớp với POSITION trong JS -->
                   <select class="form-control" id="position">
                     <option>Chọn chức vụ</option>
-                    <option>Sếp</option>
-                    <option>Trưởng phòng</option>
-                    <option>Nhân viên</option>
+                    <option>Giám đốc</option>
+                    <option>Trưởng Phòng</option>
+                    <option>Nhân Viên</option>
                   </select>
                 </div>
                 <span class="sp-thongbao" id="notifyPosition"></span>
@@ -388,17 +377,8 @@
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
 
     <!-- Date Picker -->
-    <!-- <script src="js/jquery-ui.min.js"></script> -->
     <script src="./js/jquery-ui.js"></script>
     <script src="js/datepicker.js"></script>
-
-    <!-- Wow -->
-    <!-- <script src="js/wow.min.js"></script>	
-	<script>
-		new WOW().init();
-	</script>  -->
-
-    <!-- <script src="js/modal.js"></script> -->
 
     <script type="text/javascript">
       $(document).ready(function () {
@@ -407,5 +387,6 @@
         });
       });
     </script>
+    <script src="./js/index.js"></script>
   </body>
 </html>
