@@ -134,7 +134,7 @@
                 <div class="col-md-6 text-right">
                   <button
                     class="btn btn-primary"
-                    id="btnThem"
+                    id="btnAdd"
                     data-toggle="modal"
                     data-target="#myModal"
                   >
@@ -156,7 +156,7 @@
                       id="searchName"
                     />
                     <div class="input-group-prepend">
-                      <span class="input-group-text" id="btnTimNV"
+                      <span class="input-group-text" id="btnSearchEmployee"
                         ><i class="fa fa-search"></i
                       ></span>
                     </div>
@@ -168,8 +168,8 @@
                   <tr>
                     <th class="nowrap">
                       <span class="mr-1">Tài khoản</span>
-                      <i class="fa fa-arrow-up" id="SapXepTang"></i>
-                      <i class="fa fa-arrow-down" id="SapXepGiam"></i>
+                      <i class="fa fa-arrow-up" id="sortAsc"></i>
+                      <i class="fa fa-arrow-down" id="sortDesc"></i>
                     </th>
                     <th>Họ và tên</th>
                     <th>Email</th>
@@ -180,7 +180,7 @@
                     <th><em class="fa fa-cog"></em></th>
                   </tr>
                 </thead>
-                <tbody id="tableDanhSach"></tbody>
+                <tbody id="tableEmployeeList"></tbody>
               </table>
             </div>
 
@@ -189,7 +189,7 @@
               <nav>
                 <ul
                   class="pagination justify-content-center"
-                  id="ulPhanTrang"
+                  id="ulPagination"
                 ></ul>
               </nav>
             </div>
@@ -225,13 +225,12 @@
                   <input
                     type="text"
                     name="tk"
-                    id="tknv"
+                    id="username"
                     class="form-control input-sm"
                     placeholder="Tài khoản"
                   />
                 </div>
-
-                <span class="sp-thongbao" id="tbTKNV"></span>
+                <span class="sp-thongbao" id="notifyUsername"></span>
               </div>
 
               <div class="form-group">
@@ -244,12 +243,12 @@
                   <input
                     type="name"
                     name="name"
-                    id="name"
+                    id="fullName"
                     class="form-control input-sm"
                     placeholder="Họ và tên"
                   />
                 </div>
-                <span class="sp-thongbao" id="tbTen"></span>
+                <span class="sp-thongbao" id="notifyFullName"></span>
               </div>
 
               <div class="form-group">
@@ -267,8 +266,7 @@
                     placeholder="Email"
                   />
                 </div>
-
-                <span class="sp-thongbao" id="tbEmail"></span>
+                <span class="sp-thongbao" id="notifyEmail"></span>
               </div>
 
               <div class="form-group">
@@ -286,7 +284,7 @@
                     placeholder="Mật khẩu"
                   />
                 </div>
-                <span class="sp-thongbao" id="tbMatKhau"></span>
+                <span class="sp-thongbao" id="notifyPassword"></span>
               </div>
 
               <div class="form-group">
@@ -304,8 +302,7 @@
                     placeholder="Ngày làm"
                   />
                 </div>
-
-                <span class="sp-thongbao" id="tbNgay"></span>
+                <span class="sp-thongbao" id="notifyDate"></span>
               </div>
 
               <div class="form-group">
@@ -318,13 +315,14 @@
                   <input
                     type="text"
                     name="luongCB"
-                    id="luongCB"
+                    id="baseSalary"
                     class="form-control input-sm"
                     placeholder="Lương cơ bản"
                   />
                 </div>
-                <span class="sp-thongbao" id="tbLuongCB"></span>
+                <span class="sp-thongbao" id="notifyBaseSalary"></span>
               </div>
+
               <div class="form-group">
                 <div class="input-group">
                   <div class="input-group-prepend">
@@ -332,16 +330,16 @@
                       ><i class="fa fa-briefcase"></i
                     ></span>
                   </div>
-                  <select class="form-control" id="chucvu">
+                  <select class="form-control" id="position">
                     <option>Chọn chức vụ</option>
                     <option>Sếp</option>
                     <option>Trưởng phòng</option>
                     <option>Nhân viên</option>
                   </select>
                 </div>
-
-                <span class="sp-thongbao" id="tbChucVu"></span>
+                <span class="sp-thongbao" id="notifyPosition"></span>
               </div>
+
               <div class="form-group">
                 <div class="input-group">
                   <div class="input-group-prepend">
@@ -352,26 +350,26 @@
                   <input
                     type="text"
                     name="gioLam"
-                    id="gioLam"
+                    id="workHours"
                     class="form-control input-sm"
                     placeholder="Giờ làm"
                   />
                 </div>
-                <span class="sp-thongbao" id="tbGiolam"></span>
+                <span class="sp-thongbao" id="notifyWorkHours"></span>
               </div>
             </form>
           </div>
 
           <!-- Modal footer -->
-          <div class="modal-footer" id="modal-footer">
-            <button id="btnThemNV" type="button" class="btn btn-success">
+          <div class="modal-footer" id="modalFooter">
+            <button id="btnAddEmployee" type="button" class="btn btn-success">
               Thêm người dùng
             </button>
-            <button id="btnCapNhat" type="button" class="btn btn-success">
+            <button id="btnUpdate" type="button" class="btn btn-success">
               Cập nhật
             </button>
             <button
-              id="btnDong"
+              id="btnClose"
               type="button"
               class="btn btn-danger"
               data-dismiss="modal"
