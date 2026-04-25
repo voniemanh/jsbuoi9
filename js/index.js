@@ -329,23 +329,6 @@ btnAdd.addEventListener("click", () => {
 
 // Thêm nhân viên
 btnAddEmployee.addEventListener("click", async () => {
-  console.log("username:", inputUsername.value);
-  console.log("fullName:", inputFullName.value);
-  console.log("email:", inputEmail.value);
-  console.log("password:", inputPassword.value);
-  console.log("date:", inputDatepicker.value);
-  console.log("baseSalary:", inputBaseSalary.value);
-  console.log("position:", selectPosition.value);
-  console.log("workHours:", inputWorkHours.value);
-  validateForm();
-  console.log("notifyUsername:", notifyUsername.textContent);
-  console.log("notifyFullName:", notifyFullName.textContent);
-  console.log("notifyEmail:", notifyEmail.textContent);
-  console.log("notifyPassword:", notifyPassword.textContent);
-  console.log("notifyDate:", notifyDate.textContent);
-  console.log("notifyBaseSalary:", notifyBaseSalary.textContent);
-  console.log("notifyPosition:", notifyPosition.textContent);
-  console.log("notifyWorkHours:", notifyWorkHours.textContent);
   if (!validateForm()) return;
 
   const newStaff = getFormValues();
