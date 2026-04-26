@@ -80,7 +80,13 @@ class Staff {
 
   calcTotalSalary() {
     const coefficient = SALARY_COEFFICIENT[this.position] || 1;
-    return this.baseSalary * coefficient * this.workHours;
+    const standardSalary = this.baseSalary * coefficient;
+
+    if (this.workHours < 160) {
+      return standardSalary - this.baseSalary * (160 - this.workHours);
+    }
+
+    return standardSalary;
   }
 }
 
