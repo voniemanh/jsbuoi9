@@ -1,22 +1,39 @@
+/* ===== Validation error messages ===== */
 .sp-thongbao {
-  color: red;
-  margin-left: 2px; 
-  display: none;
+  display: block;
+  color: #e74c3c;
+  font-size: 12px;
+  margin-top: 4px;
+  min-height: 16px;
+  padding-left: 4px;
 }
 
-#SapXepGiam{
-	display: none;
+.sp-thongbao:empty {
+  min-height: 0;
 }
 
-#content{
-	width: 100%;
-	background: #74ebd5;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #ACB6E5, #74ebd5);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #ACB6E5, #74ebd5); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
+/* Highlight viền đỏ cho input khi có lỗi */
+.input-error .form-control,
+.input-error .input-group-text {
+  border-color: #e74c3c !important;
 }
 
+#content {
+  width: 100%;
+  background: #74ebd5; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #acb6e5,
+    #74ebd5
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #acb6e5,
+    #74ebd5
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
 
-.myCardHeader, .myCardFooter{
-	background-color: transparent;       
+.myCardHeader,
+.myCardFooter {
+  background-color: transparent;
 }

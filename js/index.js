@@ -5,6 +5,7 @@ const btnUpdate = document.getElementById("btnUpdate");
 const btnClose = document.getElementById("btnClose");
 const btnSearchEmployee = document.getElementById("btnSearchEmployee");
 const searchName = document.getElementById("searchName");
+const filterType = document.getElementById("filterType");
 const sortAsc = document.getElementById("sortAsc");
 const sortDesc = document.getElementById("sortDesc");
 const tableEmployeeList = document.getElementById("tableEmployeeList");
@@ -39,14 +40,12 @@ const POSITION = {
   EMPLOYEE: "Nhân Viên",
 };
 
-// Hệ số lương theo chức vụ
 const SALARY_COEFFICIENT = {
   [POSITION.DIRECTOR]: 3.0,
   [POSITION.MANAGER]: 2.0,
   [POSITION.EMPLOYEE]: 1.0,
 };
 
-// Phân loại nhân viên theo giờ làm
 function getStaffType(workHours) {
   if (workHours >= 192) return "Xuất sắc";
   if (workHours >= 176) return "Giỏi";
@@ -140,10 +139,10 @@ function renderTable(staffList) {
       <td>${formatCurrency(staff.totalSalary)}</td>
       <td>${staff.staffType}</td>
       <td>
-        <button class="btn btn-warning btn-sm btn-edit" data-id="${staff.id}">
+        <button class="btn btn-warning btn-sm btn-edit" data-id="${staff.id}" title="Sửa">
           <i class="fa fa-pencil"></i>
         </button>
-        <button class="btn btn-danger btn-sm btn-delete" data-id="${staff.id}">
+        <button class="btn btn-danger btn-sm btn-delete" data-id="${staff.id}" title="Xoá">
           <i class="fa fa-trash"></i>
         </button>
       </td>`;
@@ -151,9 +150,33 @@ function renderTable(staffList) {
   });
 }
 
+// ==================== FILTER & SEARCH (shared state) ====================
+let allStaffs = [];
+
 async function loadAndRender() {
-  const staffs = await fetchAllStaffs();
-  renderTable(staffs);
+  allStaffs = await fetchAllStaffs();
+  applyFilters();
+}
+
+/**
+ * Áp dụng đồng thời: từ khoá tìm kiếm + xếp loại từ dropdown filterType
+ */
+function applyFilters() {
+  const keyword = searchName.value.trim().toLowerCase();
+  const typeVal = filterType ? filterType.value : ""; // xếp loại được chọn
+
+  let result = allStaffs.filter((s) => {
+    const matchKeyword =
+      !keyword ||
+      s.position.toLowerCase().includes(keyword) ||
+      s.fullName.toLowerCase().includes(keyword);
+
+    const matchType = !typeVal || s.staffType === typeVal;
+
+    return matchKeyword && matchType;
+  });
+
+  renderTable(result);
 }
 
 // ==================== VALIDATION ====================
@@ -185,7 +208,7 @@ function validateForm() {
     isValid = false;
   }
 
-  // Họ và tên: không để trống, chỉ chứa chữ cái và khoảng trắng
+  // Họ và tên
   const fullName = inputFullName.value.trim();
   if (!fullName) {
     notifyFullName.textContent = "Vui lòng nhập họ và tên.";
@@ -195,7 +218,7 @@ function validateForm() {
     isValid = false;
   }
 
-  // Email: không để trống, đúng định dạng
+  // Email
   const email = inputEmail.value.trim();
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!email) {
@@ -206,7 +229,7 @@ function validateForm() {
     isValid = false;
   }
 
-  // Mật khẩu: không để trống, 6-10 ký tự, có ít nhất 1 số, 1 hoa, 1 ký tự đặc biệt
+  // Mật khẩu
   const password = inputPassword.value;
   if (!password) {
     notifyPassword.textContent = "Vui lòng nhập mật khẩu.";
@@ -225,7 +248,7 @@ function validateForm() {
     isValid = false;
   }
 
-  // Ngày làm: không để trống, định dạng mm/dd/yyyy
+  // Ngày làm
   const dateVal = inputDatepicker.value.trim();
   const dateRegex = /^(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])\/\d{4}$/;
   if (!dateVal) {
@@ -236,7 +259,7 @@ function validateForm() {
     isValid = false;
   }
 
-  // Lương cơ bản: không để trống, trong khoảng 1,000,000 - 20,000,000
+  // Lương cơ bản
   const baseSalary = Number(inputBaseSalary.value);
   if (!inputBaseSalary.value) {
     notifyBaseSalary.textContent = "Vui lòng nhập lương cơ bản.";
@@ -251,13 +274,13 @@ function validateForm() {
     isValid = false;
   }
 
-  // Chức vụ: phải chọn hợp lệ
+  // Chức vụ
   if (!Object.values(POSITION).includes(selectPosition.value)) {
     notifyPosition.textContent = "Vui lòng chọn chức vụ hợp lệ.";
     isValid = false;
   }
 
-  // Giờ làm: phải là số dương
+  // Giờ làm
   if (
     !inputWorkHours.value ||
     isNaN(inputWorkHours.value) ||
@@ -321,10 +344,11 @@ function fillForm(staff) {
 
 // ==================== EVENT LISTENERS ====================
 
+// Mở modal thêm mới
 btnAdd.addEventListener("click", () => {
   resetForm();
   setModalMode("add");
-  $("#myModal").modal("show"); // mở modal sau khi đã set mode
+  $("#myModal").modal("show");
 });
 
 // Thêm nhân viên
@@ -354,9 +378,9 @@ btnUpdate.addEventListener("click", async () => {
   currentEditId = null;
 });
 
-// Xoá và sửa (event delegation)
+// Xoá và Sửa (event delegation)
 tableEmployeeList.addEventListener("click", async (e) => {
-  // Xoá
+  // --- Xoá ---
   const deleteBtn = e.target.closest(".btn-delete");
   if (deleteBtn) {
     const id = deleteBtn.dataset.id;
@@ -367,12 +391,11 @@ tableEmployeeList.addEventListener("click", async (e) => {
     return;
   }
 
-  // Sửa
+  // --- Sửa ---
   const editBtn = e.target.closest(".btn-edit");
   if (editBtn) {
     const id = editBtn.dataset.id;
-    const staffs = await fetchAllStaffs();
-    const staff = staffs.find((s) => String(s.id) === String(id));
+    const staff = allStaffs.find((s) => String(s.id) === String(id));
     if (!staff) return;
 
     currentEditId = id;
@@ -382,33 +405,30 @@ tableEmployeeList.addEventListener("click", async (e) => {
   }
 });
 
-// Tìm kiếm
-btnSearchEmployee.addEventListener("click", async () => {
-  const keyword = searchName.value.trim().toLowerCase();
-  const staffs = await fetchAllStaffs();
-  const filtered = staffs.filter(
-    (s) =>
-      s.position.toLowerCase().includes(keyword) ||
-      s.fullName.toLowerCase().includes(keyword),
-  );
-  renderTable(filtered);
-});
+// Tìm kiếm realtime
+searchName.addEventListener("input", applyFilters);
+
+// Nút kính lúp (vẫn giữ để tương thích HTML cũ)
+btnSearchEmployee.addEventListener("click", applyFilters);
+
+// Dropdown lọc xếp loại
+if (filterType) {
+  filterType.addEventListener("change", applyFilters);
+}
 
 // Sắp xếp tăng dần theo tài khoản
-sortAsc.addEventListener("click", async () => {
-  const staffs = await fetchAllStaffs();
-  staffs.sort((a, b) => a.username.localeCompare(b.username));
-  renderTable(staffs);
+sortAsc.addEventListener("click", () => {
+  allStaffs.sort((a, b) => a.username.localeCompare(b.username));
+  applyFilters();
 });
 
 // Sắp xếp giảm dần theo tài khoản
-sortDesc.addEventListener("click", async () => {
-  const staffs = await fetchAllStaffs();
-  staffs.sort((a, b) => b.username.localeCompare(a.username));
-  renderTable(staffs);
+sortDesc.addEventListener("click", () => {
+  allStaffs.sort((a, b) => b.username.localeCompare(a.username));
+  applyFilters();
 });
 
-// Đóng modal reset form
+// Đóng modal → reset form
 btnClose.addEventListener("click", () => {
   resetForm();
   currentEditId = null;

@@ -130,7 +130,6 @@
                   </h3>
                 </div>
                 <div class="col-md-6 text-right">
-                  <!-- Đã xoá data-toggle và data-target, JS sẽ tự mở modal -->
                   <button class="btn btn-primary" id="btnAdd">
                     Thêm nhân viên
                   </button>
@@ -140,30 +139,68 @@
 
             <!-- Body -->
             <div class="card-body">
+              <!-- ===== Hàng tìm kiếm + filter ===== -->
               <div class="row mb-3">
-                <div class="col">
+                <!-- Tìm kiếm theo tên / chức vụ -->
+                <div class="col-md-6">
                   <div class="input-group">
                     <input
                       type="text"
                       class="form-control"
-                      placeholder="Loại nhân viên"
+                      placeholder="Tìm theo tên hoặc chức vụ..."
                       id="searchName"
                     />
-                    <div class="input-group-prepend">
-                      <span class="input-group-text" id="btnSearchEmployee">
+                    <div class="input-group-append">
+                      <span
+                        class="input-group-text"
+                        id="btnSearchEmployee"
+                        style="cursor: pointer"
+                      >
                         <i class="fa fa-search"></i>
                       </span>
                     </div>
                   </div>
                 </div>
+
+                <!-- Dropdown lọc theo xếp loại nhân viên -->
+                <div class="col-md-4">
+                  <select class="form-control" id="filterType">
+                    <option value="">-- Tất cả xếp loại --</option>
+                    <option value="Xuất sắc">Xuất sắc (≥ 192 giờ)</option>
+                    <option value="Giỏi">Giỏi (≥ 176 giờ)</option>
+                    <option value="Khá">Khá (≥ 160 giờ)</option>
+                    <option value="Trung bình">Trung bình (≥ 128 giờ)</option>
+                    <option value="Yếu">Yếu (&lt; 128 giờ)</option>
+                  </select>
+                </div>
+
+                <!-- Nút reset filter -->
+                <div class="col-md-2">
+                  <button
+                    class="btn btn-secondary btn-block"
+                    id="btnResetFilter"
+                  >
+                    <i class="fa fa-refresh"></i> Reset
+                  </button>
+                </div>
               </div>
+
+              <!-- Bảng nhân viên -->
               <table class="table table-bordered table-hover myTable">
                 <thead class="text-primary">
                   <tr>
                     <th class="nowrap">
                       <span class="mr-1">Tài khoản</span>
-                      <i class="fa fa-arrow-up" id="sortAsc"></i>
-                      <i class="fa fa-arrow-down" id="sortDesc"></i>
+                      <i
+                        class="fa fa-arrow-up"
+                        id="sortAsc"
+                        style="cursor: pointer"
+                      ></i>
+                      <i
+                        class="fa fa-arrow-down"
+                        id="sortDesc"
+                        style="cursor: pointer"
+                      ></i>
                     </th>
                     <th>Họ và tên</th>
                     <th>Email</th>
@@ -197,7 +234,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <header class="head-form mb-0">
-            <h2 id="headerTitle">Log In</h2>
+            <h2 id="headerTitle">Thêm nhân viên</h2>
           </header>
 
           <!-- Modal body -->
@@ -229,7 +266,7 @@
                     ></span>
                   </div>
                   <input
-                    type="name"
+                    type="text"
                     name="name"
                     id="fullName"
                     class="form-control input-sm"
@@ -287,7 +324,7 @@
                     name="ngaylam"
                     id="datepicker"
                     class="form-control"
-                    placeholder="Ngày làm"
+                    placeholder="Ngày làm (mm/dd/yyyy)"
                   />
                 </div>
                 <span class="sp-thongbao" id="notifyDate"></span>
@@ -318,7 +355,6 @@
                       ><i class="fa fa-briefcase"></i
                     ></span>
                   </div>
-                  <!-- Đã sửa option khớp với POSITION trong JS -->
                   <select class="form-control" id="position">
                     <option>Chọn chức vụ</option>
                     <option>Giám đốc</option>
@@ -351,10 +387,12 @@
 
           <!-- Modal footer -->
           <div class="modal-footer" id="modalFooter">
+            <!-- Nút thêm: chỉ hiện khi mode = add -->
             <button id="btnAddEmployee" type="button" class="btn btn-success">
               Thêm người dùng
             </button>
-            <button id="btnUpdate" type="button" class="btn btn-success">
+            <!-- Nút cập nhật: chỉ hiện khi mode = edit -->
+            <button id="btnUpdate" type="button" class="btn btn-primary">
               Cập nhật
             </button>
             <button
@@ -387,6 +425,19 @@
         });
       });
     </script>
+
     <script src="./js/index.js"></script>
+
+    <!-- Reset filter button -->
+    <script>
+      document
+        .getElementById("btnResetFilter")
+        .addEventListener("click", function () {
+          document.getElementById("searchName").value = "";
+          document.getElementById("filterType").value = "";
+          // gọi lại applyFilters nếu đã load xong
+          if (typeof applyFilters === "function") applyFilters();
+        });
+    </script>
   </body>
 </html>
