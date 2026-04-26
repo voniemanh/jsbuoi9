@@ -80,13 +80,15 @@ class Staff {
 
   calcTotalSalary() {
     const coefficient = SALARY_COEFFICIENT[this.position] || 1;
-    const standardSalary = this.baseSalary * coefficient;
+    const standardSalary = this.baseSalary * coefficient; // lương chuẩn 160 giờ
+    const hourlyRate = standardSalary / 160; // lương 1 giờ
 
-    if (this.workHours < 160) {
-      return standardSalary - this.baseSalary * (160 - this.workHours);
+    if (this.workHours >= 160) {
+      return standardSalary;
     }
 
-    return standardSalary;
+    // thiếu giờ → trừ đúng theo đơn giá giờ
+    return standardSalary - hourlyRate * (160 - this.workHours);
   }
 }
 

@@ -1,43 +1,43 @@
 {
   "staffs": [
     {
-      "username": "1234",
-      "fullName": "papa",
-      "email": "n@gmail.com",
-      "password": "@Abc123",
-      "startDate": "04/01/2026",
-      "baseSalary": 5000000,
+      "username": "0001",
+      "fullName": "Giám đốc",
+      "email": "gd@example.com",
+      "password": "Abc@123",
+      "startDate": "04/02/2026",
+      "baseSalary": 20000000,
       "position": "Giám đốc",
       "workHours": 200,
-      "totalSalary": 3000000000,
+      "totalSalary": 60000000,
       "staffType": "Xuất sắc",
-      "id": "OUJm3ZjFzUs"
+      "id": "bP0VQlLw74M"
     },
     {
-      "username": "2345",
-      "fullName": "tuôi",
-      "email": "nn@gmail.com",
+      "username": "0002",
+      "fullName": "Trưởng phòng",
+      "email": "tp@example.com",
       "password": "Abc@123",
       "startDate": "04/01/2026",
-      "baseSalary": 1000000,
+      "baseSalary": 15000000,
       "position": "Trưởng Phòng",
       "workHours": 150,
-      "totalSalary": 300000000,
+      "totalSalary": 28125000,
       "staffType": "Trung bình",
-      "id": "b0o025wB5x0"
+      "id": "a1v7z5afq_U"
     },
     {
-      "username": "1234",
-      "fullName": "tuôi",
-      "email": "ng@gmail.com",
-      "password": "12343453$A",
-      "startDate": "04/01/2026",
+      "username": "0003",
+      "fullName": "Nhân viên",
+      "email": "nv@example.com",
+      "password": "Abc@123",
+      "startDate": "04/03/2026",
       "baseSalary": 5000000,
       "position": "Nhân Viên",
-      "workHours": 200,
-      "totalSalary": 1000000000,
-      "staffType": "Xuất sắc",
-      "id": "rLz4Rx0uID0"
+      "workHours": 180,
+      "totalSalary": 5000000,
+      "staffType": "Giỏi",
+      "id": "ctqde2X7a2M"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
