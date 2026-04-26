@@ -50,8 +50,7 @@ function getStaffType(workHours) {
   if (workHours >= 192) return "Xuất sắc";
   if (workHours >= 176) return "Giỏi";
   if (workHours >= 160) return "Khá";
-  if (workHours >= 128) return "Trung bình";
-  return "Yếu";
+  return "Trung bình";
 }
 
 // ==================== CLASS STAFF ====================
